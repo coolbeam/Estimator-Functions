@@ -1,0 +1,24 @@
+import os
+import math
+import numpy as np
+from plot_function import plot_loss_function_curve
+
+
+class ActivationCurves(plot_loss_function_curve):
+    def sigmoid(self, **kwargs):
+        def func(a, **kwargs):
+            return 1 / (1 + math.exp(-a))
+
+        name = self._get_param(p_key='name', default_value='', **kwargs)
+        name += 'sigmoid'
+        self._plot_curve(func=func, plot_name=name, **kwargs)
+
+    @classmethod
+    def demo(cls, ):
+        a = ActivationCurves()
+        a.sigmoid()  # stay=True可以保留到上一个图中
+        a.show()
+
+
+if __name__ == '__main__':
+    ActivationCurves.demo()
