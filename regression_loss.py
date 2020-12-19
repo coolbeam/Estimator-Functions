@@ -67,17 +67,27 @@ class RegressionCurves(plot_loss_function_curve):
         name = 'lorentzian2-' + name
         self._plot_curve(func=func, plot_name=name, **kwargs)
 
+    def sigmoid_xe(self, **kwargs):
+        def func(a, **kwargs):
+            return 1 / (1 + a*a*math.exp(-a))
+
+        name = self._get_param(p_key='name', default_value='', **kwargs)
+        name += 'sigmoid-xe'
+        self._plot_curve(func=func, plot_name=name, **kwargs)
+
     @classmethod
     def demo(cls, ):
         a = RegressionCurves()
-        a.quadratic1()  # stay=True可以保留到上一个图中
-        a.truncated_quadratic1(stay=True)
-        a.quadratic2()  # stay=True可以保留到上一个图中
-        a.truncated_quadratic2(stay=True)
+        # range_a=-2.5, range_b=2.5, range_delta=0.01
+        # a.quadratic1()  # stay=True可以保留到上一个图中
+        # a.truncated_quadratic1(stay=True)
+        # a.quadratic2()  # stay=True可以保留到上一个图中
+        # a.truncated_quadratic2(stay=True)
         a.lorentzian1()
         a.lorentzian2()
-        for i in [0.1, 1, 10, 100]:
-            a.lorentzian2(delta=i, name='delta-%s' % i)
+        a.sigmoid_xe()
+        # for i in [0.1, 1, 10, 100]:
+        #     a.lorentzian2(delta=i, name='delta-%s' % i)
         a.show()
 
 if __name__ == '__main__':

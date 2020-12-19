@@ -27,6 +27,7 @@ class plot_loss_function_curve():
         self.plt.ylabel("y")
         # plt.ylim(0, 1)
         self.plt.legend()
+        self.plt.grid()
 
     def show(self):
         self.plt.show()

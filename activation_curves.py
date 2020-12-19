@@ -13,10 +13,19 @@ class ActivationCurves(plot_loss_function_curve):
         name += 'sigmoid'
         self._plot_curve(func=func, plot_name=name, **kwargs)
 
+    def sigmoid_x(self, **kwargs):
+        def func(a, **kwargs):
+            return a / (1 + math.exp(-a))
+
+        name = self._get_param(p_key='name', default_value='', **kwargs)
+        name += 'sigmoid-x'
+        self._plot_curve(func=func, plot_name=name, **kwargs)
+
     @classmethod
     def demo(cls, ):
         a = ActivationCurves()
         a.sigmoid()  # stay=True可以保留到上一个图中
+        a.sigmoid_x()
         a.show()
 
 
