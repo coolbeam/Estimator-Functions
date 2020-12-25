@@ -57,6 +57,15 @@ class RegressionCurves(plot_loss_function_curve):
         name = self._get_param(p_key='name', default_value='', **kwargs)
         name += 'lorentzian1'
         self._plot_curve(func=func, plot_name=name, **kwargs)
+    def lorentzian1a(self, **kwargs):
+        def func(a, **kwargs):
+            temp = a**2
+            temp = np.log(1 + temp)
+            return temp
+
+        name = self._get_param(p_key='name', default_value='', **kwargs)
+        name += 'lorentzian1a'
+        self._plot_curve(func=func, plot_name=name, **kwargs)
 
     def lorentzian2(self, **kwargs):
         def func(a, **kwargs):
@@ -67,14 +76,24 @@ class RegressionCurves(plot_loss_function_curve):
         name = 'lorentzian2-' + name
         self._plot_curve(func=func, plot_name=name, **kwargs)
 
-    def sigmoid_xe(self, **kwargs):
+    def abs_robust(self, **kwargs):
         def func(a, **kwargs):
-            return 1 / (1 + a*a*math.exp(-a))
+            temp = np.abs(a)
+            temp = (temp + 1e-6) ** 0.4
+            return temp
 
         name = self._get_param(p_key='name', default_value='', **kwargs)
-        name += 'sigmoid-xe'
+        name += 'abs_robust'
         self._plot_curve(func=func, plot_name=name, **kwargs)
+    def charbonnier(self, **kwargs):
+        def func(a, **kwargs):
+            temp = a**2
+            temp = (temp + 1e-6) ** 0.4
+            return temp
 
+        name = self._get_param(p_key='name', default_value='', **kwargs)
+        name += 'charbonnier'
+        self._plot_curve(func=func, plot_name=name, **kwargs)
     @classmethod
     def demo(cls, ):
         a = RegressionCurves()
@@ -83,12 +102,15 @@ class RegressionCurves(plot_loss_function_curve):
         # a.truncated_quadratic1(stay=True)
         # a.quadratic2()  # stay=True可以保留到上一个图中
         # a.truncated_quadratic2(stay=True)
-        a.lorentzian1()
-        a.lorentzian2()
-        a.sigmoid_xe()
+        # a.lorentzian1()
+        # a.lorentzian2()
+        # a.lorentzian1a()
+        a.abs_robust(range_a=-10, range_b=10, range_delta=0.01)
+        a.charbonnier(range_a=-10, range_b=10, range_delta=0.01,stay=True)
         # for i in [0.1, 1, 10, 100]:
-        #     a.lorentzian2(delta=i, name='delta-%s' % i)
+        #     a.lorentzian1(delta=i, name='delta-%s' % i)
         a.show()
+
 
 if __name__ == '__main__':
     RegressionCurves.demo()
